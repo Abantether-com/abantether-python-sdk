@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Dict, Optional, Any
 
 import requests
@@ -137,15 +138,15 @@ class Client(BaseClient):
         :param base_symbol: optional - The base symbol
         :param quote_symbol: optional - The quote symbol
         :param state: optional - The state of the order
-        :param from_date: optional - The start date of the order creation time range
-        :param to_date: optional - The end date of the order creation time range
-        :param quantity_min: optional - The quantity min ( IRT or USDT)
-        :param quantity_max: optional - The quantity max ( IRT or USDT)
+        :param from_date: optional - The start date of the order creation time range - example: 2023-08-25 13:17:08
+        :param to_date: optional - The end date of the order creation time range - example: 2023-09-28 13:17:08
+        :param quantity_min: optional - The quantity min (IRT or USDT)
+        :param quantity_max: optional - The quantity max (IRT or USDT)
 
-        :returns: list - List of product dictionaries
+        :returns: list - List of order reports
 
         .. code-block:: python
-
+            TODO
 
         """
 
@@ -161,3 +162,50 @@ class Client(BaseClient):
         }
 
         return self._get(self.OTC_ORDERS_URL, params)
+
+    def get_order_report(self, order_id: str) -> Dict:
+        """
+        Return a specific order report
+
+        :param order_id: order_id for the wanted order
+
+        :returns: dict - Report for the specific order
+
+        .. code-block:: python
+            TODO
+
+        """
+
+        return self._get(f'{self.BASE_ORDER_URL}/{order_id}')
+
+    def place_market_order(self, base_symbol: str, quote_symbol: str, side: OrderSide,
+                           volume: str, track_id: Optional[str] = None,
+                           stop_loss_price: Optional[str | Decimal] = None) -> Dict:
+        """
+        Place a market order
+
+        :param base_symbol: The base symbol
+        :param quote_symbol: The quote symbol
+        :param side: The side of the order (buy or sell)
+        :param volume: The quantity for the order (if buy: volume of quote_symbol, if sell: volume of base_symbol)
+        :param track_id: An arbitrary identifier for tracking the order
+        :param stop_loss_price: optional - only used when you want to set stop_loss for your order
+
+        :returns: dict - if succeeded, returns the placed order details
+
+        .. code-block:: python
+            TODO
+
+        """
+
+        params = {
+            'base_symbol': base_symbol,
+            'quote_symbol': quote_symbol,
+            'side': side,
+            'volume': volume,
+            'track_id': track_id,
+            'stop_loss_price': stop_loss_price,
+
+        }
+
+        return self._post(self.PLACE_OTC_MARKET_ORDER_URL, params)
