@@ -2,11 +2,12 @@ from typing import Dict, Optional, Any
 
 import requests
 
-from enums import RequestMethod
+from enums import RequestMethod, OrderSide, OrderStatus
 
 
 class BaseClient:
     BASE_API_URL = 'https://abantether.com'
+    # BASE_API_URL = 'https://sandbox.abansite.com'
     BASE_ORDER_URL = f'{BASE_API_URL}/order_handler/orders'
     OTC_ORDERS_URL = f'{BASE_ORDER_URL}/otc'
     PLACE_OTC_MARKET_ORDER_URL = f'{OTC_ORDERS_URL}/market'
@@ -44,41 +45,42 @@ class BaseClient:
     def _init_session(self):
         raise NotImplementedError
 
-    def _request(self, method, url: str, **kwargs):
+    def _request(self, method, url: str, data: Optional[dict] = None):
         raise NotImplementedError
 
-    def _get(self, url: str, **kwargs):
-        return self._request(RequestMethod.GET.value, url, **kwargs)
+    def _get(self, url: str, data: Optional[dict] = None):
+        return self._request(RequestMethod.GET, url, data)
 
-    def _post(self, url: str, **kwargs):
-        return self._request(RequestMethod.POST.value, url, **kwargs)
+    def _post(self, url: str, data: Optional[dict] = None):
+        return self._request(RequestMethod.POST, url, data)
 
-    def _put(self, url: str, **kwargs):
-        return self._request(RequestMethod.PUT.value, url, **kwargs)
+    def _put(self, url: str, data: Optional[dict] = None):
+        return self._request(RequestMethod.PUT, url, data)
 
-    def _patch(self, url: str, **kwargs):
-        return self._request(RequestMethod.PATCH.value, url, **kwargs)
+    def _patch(self, url: str, data: Optional[dict] = None):
+        return self._request(RequestMethod.PATCH, url, data)
 
-    def _delete(self, url: str, **kwargs):
-        return self._request(RequestMethod.DELETE.value, url, **kwargs)
+    def _delete(self, url: str, data: Optional[dict] = None):
+        return self._request(RequestMethod.DELETE, url, data)
 
-
-    def _get_request_kwargs(self, method, **kwargs) -> Dict:
-        kwargs['timeout'] = self.request_timeout
+    def _get_request_params(self, method, data: Optional[dict] = None) -> Dict:
+        params = {
+            'timeout': self.request_timeout,
+        }
 
         if self.requests_params:
-            kwargs.update(self.requests_params)
+            params.update(self.requests_params)
 
-        data = kwargs.get('data', None)
         if data:
             # Remove any arguments with values of None.
             data = {key: value for key, value in data.items() if value is not None}
+            params['data'] = data
 
-        if data and method == RequestMethod.GET.value:
-            kwargs['params'] = '&'.join('%s=%s' % (key, value) for key, value in data.items())
-            del kwargs['data']
+        if data and method == RequestMethod.GET:
+            params['params'] = '&'.join('%s=%s' % (key, value) for key, value in data.items())
+            del params['data']
 
-        return kwargs
+        return params
 
 
 class Client(BaseClient):
@@ -89,9 +91,8 @@ class Client(BaseClient):
         session.headers.update(headers)
         return session
 
-    def _request(self, method:str, url: str, **kwargs):
-        kwargs = self._get_request_kwargs(method, **kwargs)
-        print('111111111', kwargs['params'])
+    def _request(self, method: str, url: str, data: Optional[dict] = None):
+        kwargs = self._get_request_params(method, data)
 
         self.response = getattr(self.session, method)(url, **kwargs)
         return self._handle_response(self.response)
@@ -108,9 +109,8 @@ class Client(BaseClient):
         except ValueError:
             raise ValueError(f'Invalid Response: {response.text}')
 
-
     # Exchange Endpoints
-    def get_all_coins(self, **kwargs) -> Dict:
+    def get_all_coins(self, data: Optional[dict] = None) -> Dict:
         """
         Return list of all coins listed on Abantether
 
@@ -123,12 +123,24 @@ class Client(BaseClient):
         ]
 
         """
-        coins = self._get(self.ALL_COINS_URL,**kwargs)
+        coins = self._get(self.ALL_COINS_URL, data)
         return coins
 
-    def get_orders_report(self) -> Dict:
+    def get_orders_report(self, side: OrderSide, state: Optional[OrderStatus] = None,
+                          base_symbol: Optional[str] = None, quote_symbol: Optional[str] = None,
+                          from_date: Optional[str] = None, to_date: Optional[str] = None,
+                          quantity_min: Optional[str] = None, quantity_max: Optional[str] = None) -> Dict:
         """
         Return your orders report
+
+        :param side: The side of the order (buy or sell)
+        :param base_symbol: optional - The base symbol
+        :param quote_symbol: optional - The quote symbol
+        :param state: optional - The state of the order
+        :param from_date: optional - The start date of the order creation time range
+        :param to_date: optional - The end date of the order creation time range
+        :param quantity_min: optional - The quantity min ( IRT or USDT)
+        :param quantity_max: optional - The quantity max ( IRT or USDT)
 
         :returns: list - List of product dictionaries
 
@@ -137,4 +149,15 @@ class Client(BaseClient):
 
         """
 
-        return self._get(self.OTC_ORDERS_URL)
+        params = {
+            'base_symbol': base_symbol,
+            'quote_symbol': quote_symbol,
+            'state': state,
+            'from_date': from_date,
+            'to_date': to_date,
+            'side': side,
+            'quantity_min': quantity_min,
+            'quantity_max': quantity_max,
+        }
+
+        return self._get(self.OTC_ORDERS_URL, params)
