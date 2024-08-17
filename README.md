@@ -1,4 +1,4 @@
-# Abantether-python-sdk
+# Abantether Python SDK
 A python sdk to trade easily in abantether.com (under development)
 
 ## How to use?
