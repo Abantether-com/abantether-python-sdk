@@ -2,6 +2,11 @@
 A python sdk to trade easily in abantether.com (under development)
 
 ## How to use?
+To install:
+
+```shell
+pip install abantether-python-sdk
+```
 
 To instantiate the client use:
 
