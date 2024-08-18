@@ -3,7 +3,7 @@ from typing import Dict, Optional, Any
 
 import requests
 
-from enums import RequestMethod, OrderSide, OrderStatus
+from abantether.enums import RequestMethod, OrderSide, OrderStatus
 
 
 class BaseClient:

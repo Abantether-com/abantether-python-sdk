@@ -1,13 +1,11 @@
-# read the contents of your README file
-from pathlib import Path
-
 from setuptools import setup
 from setuptools import setup, find_packages
 
-version = '0.0.2'
+version = '0.0.5'
 
 setup(
     name='abantether-python-sdk',
+    packages=['abantether'],
     license='MIT',
     version=version,
     author='Iman Mousaei',
@@ -21,7 +19,6 @@ setup(
     install_requires=[
         'requests==2.31.0'
     ],
-    packages=find_packages(),
     classifiers=[
         # "3 - Alpha", "4 - Beta" or "5 - Production/Stable"
         'Development Status :: 4 - Beta',

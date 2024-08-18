@@ -1,5 +1,5 @@
-from client import Client as AbantetherClient
-from enums import OrderSide
+from abantether.client import Client as AbantetherClient
+from abantether.enums import OrderSide
 
 ACCESS_TOKEN = ''
 
