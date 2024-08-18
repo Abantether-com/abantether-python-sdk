@@ -1,11 +1,11 @@
 from setuptools import setup
 from setuptools import setup, find_packages
 
-version = '0.0.7'
+version = '0.0.10'
 
 setup(
     name='abantether-python-sdk',
-    packages=['abantether'],
+    packages=['abantether_python_sdk'],
     license='MIT',
     version=version,
     author='Iman Mousaei',

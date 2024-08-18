@@ -1,4 +1,4 @@
-from client import Client as AbantetherClient
+from abantether_python_sdk.client import Client as AbantetherClient
 from enums import OrderSide
 from pandas.io.formats.format import return_docstring
 
