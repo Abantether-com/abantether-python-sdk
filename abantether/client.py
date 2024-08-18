@@ -1,14 +1,14 @@
+import json
 from decimal import Decimal
 from typing import Dict, Optional, Any
 
 import requests
-
 from abantether.enums import RequestMethod, OrderSide, OrderStatus
 
 
 class BaseClient:
     # BASE_API_URL = 'https://abantether.com'
-    BASE_API_URL = 'https://sandbox.abansite.com'
+    BASE_API_URL = 'https://api.sandbox.abansite.com'
     BASE_ORDER_URL = f'{BASE_API_URL}/order_handler/orders'
     OTC_ORDERS_URL = f'{BASE_ORDER_URL}/otc'
     PLACE_OTC_MARKET_ORDER_URL = f'{OTC_ORDERS_URL}/market'
@@ -75,7 +75,7 @@ class BaseClient:
         if data:
             # Remove any arguments with values of None.
             data = {key: value for key, value in data.items() if value is not None}
-            params['data'] = data
+            params['data'] = json.dumps(data)
 
         if data and method == RequestMethod.GET:
             params['params'] = '&'.join('%s=%s' % (key, value) for key, value in data.items())
@@ -146,8 +146,7 @@ class Client(BaseClient):
         :returns: list - List of order reports
 
         .. code-block:: python
-            TODO
-
+            {'data': [{'id': '66c1d5b9c048c40b3939245a', 'code': '7432587855', 'user': {'phone_number': '+989222222222', 'first_name': 'ایمان', 'last_name': 'موسایی', 'full_name': 'ایمان موسایی'}, 'base_symbol': 'CELR', 'quote_symbol': 'IRT', 'side': 'buy', 'type': 'market', 'status': 'failed', 'volume': {'base': '0.0', 'quote': '762702.700000'}, 'filled_volume': {'base': '0.0', 'quote': '762702.700000'}, 'persian_name': 'سلر', 'created_at': 1723979192240, 'finalized_at': 1723979202786, 'price': None, 'stop_loss_detail': None, 'fee_amount': None, 'aban_fee_amount': None, 'exchange_fee_amount': None, 'coin_price': '0.01988000000000000000', 'usdt_price': '60900.0', 'stop_price': None}], 'page': 1, 'per_page': 10, 'page_count': 1, 'total': 1}
         """
 
         params = {
@@ -162,21 +161,6 @@ class Client(BaseClient):
         }
 
         return self._get(self.OTC_ORDERS_URL, params)
-
-    def get_order_report(self, order_id: str) -> Dict:
-        """
-        Return a specific order report
-
-        :param order_id: order_id for the wanted order
-
-        :returns: dict - Report for the specific order
-
-        .. code-block:: python
-            TODO
-
-        """
-
-        return self._get(f'{self.BASE_ORDER_URL}/{order_id}')
 
     def place_market_order(self, base_symbol: str, quote_symbol: str, side: OrderSide,
                            volume: str, track_id: Optional[str] = None,
@@ -194,7 +178,7 @@ class Client(BaseClient):
         :returns: dict - if succeeded, returns the placed order details
 
         .. code-block:: python
-            TODO
+            {'data': {'id': '66c1d99903f847637acc190a', 'code': '8044285963', 'user': {'phone_number': '+989222222222', 'first_name': 'ایمان', 'last_name': 'موسایی', 'full_name': 'ایمان موسایی'}, 'base_symbol': 'BAT', 'quote_symbol': 'IRT', 'side': 'buy', 'type': 'market', 'status': 'new', 'volume': {'base': '0.0', 'quote': '700000'}, 'filled_volume': {'base': '0.0', 'quote': '0.0'}, 'persian_name': 'بت', 'created_at': 1723980185861, 'finalized_at': None, 'price': None, 'stop_loss_detail': None, 'fee_amount': None, 'aban_fee_amount': None, 'exchange_fee_amount': None, 'coin_price': None, 'usdt_price': None, 'stop_price': None}}
 
         """
 
@@ -205,7 +189,6 @@ class Client(BaseClient):
             'volume': volume,
             'track_id': track_id,
             'stop_loss_price': stop_loss_price,
-
         }
 
         return self._post(self.PLACE_OTC_MARKET_ORDER_URL, params)

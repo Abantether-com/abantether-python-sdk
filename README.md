@@ -6,6 +6,8 @@ A python sdk to trade easily in abantether.com (under development)
 To instantiate the client use:
 
 ```python
+from abantether.client import Client as AbantetherClient
+
 aban_client = AbantetherClient(access_token=ACCESS_TOKEN)
 ```
 
