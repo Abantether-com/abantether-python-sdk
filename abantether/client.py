@@ -7,8 +7,7 @@ from abantether.enums import RequestMethod, OrderSide, OrderStatus
 
 
 class BaseClient:
-    # BASE_API_URL = 'https://abantether.com'
-    BASE_API_URL = 'https://api.sandbox.abansite.com'
+    BASE_API_URL = 'https://api.abantether.com'
     BASE_ORDER_URL = f'{BASE_API_URL}/order_handler/orders'
     OTC_ORDERS_URL = f'{BASE_ORDER_URL}/otc'
     PLACE_OTC_MARKET_ORDER_URL = f'{OTC_ORDERS_URL}/market'
