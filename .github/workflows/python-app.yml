@@ -25,14 +25,14 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Install poetry
+      - name: Install uv
         run: pipx install uv
 
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'poetry'
+          cache: 'uv'
 
       - name: Install dependencies
         run: |
@@ -41,13 +41,13 @@ jobs:
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
-          poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          uv run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings.
-          poetry run flake8 . --count --exit-zero --statistics
+          uv run flake8 . --count --exit-zero --statistics
 
       - name: Typecheck with mypy
         run: |
-          poetry run mypy mockafka tests
+          uv run mypy abantether_python_sdk tests
 
       - name: Test with pytest
         run: |
