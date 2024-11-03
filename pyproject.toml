@@ -1,14 +1,33 @@
-[tool.poetry]
-name = "abantether_python_sdk"
-version = "0.0.10"
-description = ""
-authors = ["Iman Mousaei <imanmousaei1379@gmail.com>"]
+[project]
+name = "abantether-python-sdk"
+version = "0.1.0"
+description = "Add your description here"
 readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.32.3",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-requests = "^2.32.3"
+[tool.uv]
+dev-dependencies = [
+    "mypy>=1.13.0",
+    "ruff>=0.7.2",
+]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.mypy]
+warn_unused_ignores = true
+no_implicit_optional = true
+disallow_subclassing_any = false
+ignore_missing_imports = true
+disallow_untyped_defs = true
+disallow_untyped_calls = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.ruff]
+lint.ignore = [
+    "F401",
+    "F403",
+    "F405",
+    "F811",
+]
