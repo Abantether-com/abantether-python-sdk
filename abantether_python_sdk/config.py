@@ -70,17 +70,18 @@ config: dict = {
                 "per_page",
             ],
         },
+        "coin_price": {
+            "url": f"https://mono.abantether.com/api/v1/otc/coin-price",
+            "method": Method.GET,
+            "required_params": [],
+            "optional_params": ["coin"],
+        },
+        "balance": {
+            "url": f"https://mono.abantether.com/users/balance",
+            "method": Method.GET,
+            "required_params": [],
+            "optional_params": [],
+        },
     },
-    "coin_price": {
-        "url": f"https://mono.abantether.com/api/v1/otc/coin-price",
-        "method": Method.GET,
-        "required_params": [],
-        "optional_params": ["coin"],
-    },
-    "balance": {
-        "url": f"https://mono.abantether.com/users/balance",
-        "method": Method.GET,
-        "required_params": [],
-        "optional_params": [],
-    },
+
 }

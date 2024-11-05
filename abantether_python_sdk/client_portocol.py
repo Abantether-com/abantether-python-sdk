@@ -1,4 +1,4 @@
-from typing import List, Protocol, Union, Optional, Any, Dict
+from typing import List, Protocol, Union, Optional, Dict
 
 
 class ClientProtocol(Protocol):
@@ -65,4 +65,4 @@ class ClientProtocol(Protocol):
         coin: Optional[str] = None,
     ) -> Dict: ...
 
-    def balance(self) -> Any: ...
+    def balance(self) -> Dict: ...
