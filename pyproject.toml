@@ -11,6 +11,23 @@ dependencies = [
     "requests>=2.32.3",
 ]
 
+license = {text = "MIT"}
+authors = [{name = "AbanTether"}]
+keywords = ["abantether", "sdk", "python", "api", "exchange", "wrapper", "trade", "crypto", "bitcoin"]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
 [tool.uv]
 dev-dependencies = [
     "mypy>=1.13.0",
