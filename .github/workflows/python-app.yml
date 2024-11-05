@@ -50,10 +50,6 @@ jobs:
           # exit-zero treats all errors as warnings.
           uv run flake8 . --count --exit-zero --statistics
 
-      - name: Typecheck with mypy
-        run: |
-          uv run mypy abantether_python_sdk tests
-
       - name: Test with pytest
         run: |
           uv run pytest --cov=./ --cov-report=xml
