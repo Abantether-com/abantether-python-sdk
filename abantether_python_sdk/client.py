@@ -8,6 +8,9 @@ from abantether_python_sdk.config import config
 
 class Client(ClientProtocol):
     def __init__(self, api_key: str) -> None:
+        if not api_key:
+            raise ValueError("API key must not be empty")
+
         self.config: Dict[str, Any] = config
         self.api_key: str = api_key
 
@@ -73,7 +76,3 @@ class Client(ClientProtocol):
             return self._make_request(endpoint_name, params=kwargs)
 
         return dynamic_method
-
-if __name__ == "__main__":
-    cli = Client(api_key="")
-    cli.place_market_order(side=O)
