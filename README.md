@@ -1,4 +1,8 @@
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Abantether-com/abantether-python-sdk/python-app.yml)
+![GitHub](https://img.shields.io/github/license/Abantether-com/abantether-python-sdk)
+
 # Abantether Python SDK
+
 A python sdk to trade easily in abantether.com
 
 ## How to use?
