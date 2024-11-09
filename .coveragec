@@ -1,0 +1,7 @@
+[run]
+omit =
+  *tests/*,
+  *.github/*,
+  setup.py,
+  */__init__.py,
+
