@@ -1,14 +1,14 @@
 from setuptools import setup
 
-version = "0.1.1"
+version = "0.1.2"
 
 setup(
     name="abantether-python-sdk",
     packages=["abantether_python_sdk"],
     license="MIT",
     version=version,
-    author="Iman Mousaei",
-    author_email="imanmousaei1379@gmail.com",
+    author="abantether",
+    author_email="tech@abantether.com",
     description="A python sdk to trade easily in abantether.com",
     long_description_content_type="text/markdown",
     long_description=open("README.md", "rt").read(),
