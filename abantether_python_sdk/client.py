@@ -7,9 +7,7 @@ from abantether_python_sdk.config import config
 
 
 class Client(ClientProtocol):
-    def __init__(self, api_key: str) -> None:
-        if not api_key:
-            raise ValueError("API key must not be empty")
+    def __init__(self, api_key: Optional[str] = None) -> None:
 
         self.config: Dict[str, Any] = config
         self.api_key: str = api_key
