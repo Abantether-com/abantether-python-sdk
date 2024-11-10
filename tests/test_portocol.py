@@ -1,7 +1,7 @@
 import pytest
 import inspect
 from typing import get_type_hints
-from abantether_python_sdk.client_portocol import ClientProtocol
+from abantether_python_sdk.client_protocol import ClientProtocol
 from abantether_python_sdk.config import config
 from typing import Any, Dict
 

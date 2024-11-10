@@ -1,6 +1,6 @@
 from setuptools import setup
 
-version = "0.1.2"
+version = "0.1.4"
 
 setup(
     name="abantether-python-sdk",

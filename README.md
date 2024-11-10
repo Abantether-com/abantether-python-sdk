@@ -16,7 +16,7 @@ Install the package using pip:
 pip install abantether-python-sdk
 
 # or using uv
-uv install abantether-python-sdk
+uv pip install abantether-python-sdk
 ```
 
 To instantiate the client use:

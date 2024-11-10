@@ -2,7 +2,7 @@ from typing import Any, Callable, Dict, Optional, Union
 
 import requests
 
-from abantether_python_sdk.client_portocol import ClientProtocol
+from abantether_python_sdk.client_protocol import ClientProtocol
 from abantether_python_sdk.config import config
 
 
@@ -63,6 +63,15 @@ class Client(ClientProtocol):
         except requests.exceptions.RequestException as req_err:
             # General error in request
             raise ValueError(f"Request error occurred: {req_err}") from req_err
+
+    def __getattribute__(self, name: str):
+        # Check if the requested attribute is in the endpoints config
+        if name in object.__getattribute__(self, 'config')["endpoints"]:
+            # If so, dynamically resolve it through __getattr__
+            return self.__getattr__(name)
+
+        # Otherwise, fall back to the default behavior
+        return super().__getattribute__(name)
 
     def __getattr__(self, endpoint_name: str) -> Callable[..., Any]:
         if endpoint_name not in self.config["endpoints"]:
