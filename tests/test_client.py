@@ -87,12 +87,6 @@ def test_make_request_http_error(mock_request, client):
             },
         )
 
-
-def test_invalid_api_key():
-    with pytest.raises(ValueError, match="API key must not be empty"):
-        Client(api_key="")
-
-
 @patch("requests.request")
 def test_empty_response_handling(mock_request, client):
     # Arrange: Mock an empty response

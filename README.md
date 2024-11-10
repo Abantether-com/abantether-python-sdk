@@ -24,7 +24,9 @@ To instantiate the client use:
 ```python
 from abantether_python_sdk.client import Client as AbantetherClient
 
-aban_client = AbantetherClient(access_token=ACCESS_TOKEN)
+ACCESS_TOKEN = ''
+aban_client = AbantetherClient(api_key=ACCESS_TOKEN)
+
 ```
 
 ## Development
