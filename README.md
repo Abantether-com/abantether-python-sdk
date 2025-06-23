@@ -1,6 +1,6 @@
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Abantether-com/abantether-python-sdk/python-app.yml)
+[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Abantether-com/abantether-python-sdk/python-app.yml)](https://github.com/Abantether-com/abantether-python-sdk/actions)
 ![Codecov](https://img.shields.io/codecov/c/github/Abantether-com/abantether-python-sdk)
-![GitHub](https://img.shields.io/github/license/Abantether-com/abantether-python-sdk)
+[![GitHub](https://img.shields.io/github/license/Abantether-com/abantether-python-sdk)](https://github.com/Abantether-com/abantether-python-sdk/blob/main/LICENSE)
 ![Python Versions](https://img.shields.io/pypi/pyversions/abantether-python-sdk)
 ![PyPI Version](https://img.shields.io/pypi/v/abantether-python-sdk)
 
